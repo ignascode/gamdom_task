@@ -1,6 +1,6 @@
 import React from 'react';
 import * as S from './SearchBar.styled';
-import { searchMovie } from 'services/api';
+import { getMoviesByTextSearch } from 'services/api';
 import useStore from 'store/store';
 import { observer } from 'mobx-react-lite';
 import Input from 'components/UI/Input/Input';
@@ -16,7 +16,10 @@ const SearchBar: React.FC<{}> = observer(() => {
 		if (!GS.searchTitle) return;
 
 		const search = async () => {
-			const res = await searchMovie(GS.searchTitle, GS.searchType);
+			const res = await getMoviesByTextSearch(
+				GS.searchTitle,
+				GS.searchType
+			);
 			if (res) {
 				runInAction(() => {
 					GS.setMovies(res);

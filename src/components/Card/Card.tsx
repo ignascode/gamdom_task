@@ -5,7 +5,7 @@ import { CardProps } from './Card.typed';
 
 const Card: React.FC<CardProps> = observer((p) => {
 	return (
-		<S.Card>
+		<S.Card onClick={p.onClick}>
 			<S.Img src={p.Poster} />
 			<S.Info>
 				<S.TitleAndYear>

@@ -1,9 +1,9 @@
-import { Movie, OMDbApiRequestMovieTypes } from 'types';
+import { DetailedMovie, Movie, OMDbApiRequestMovieTypes } from 'types';
 import * as Type from './types';
 
 const API_KEY = '5657bf65';
 const URL = `http://www.omdbapi.com/?apiKey=${API_KEY}`;
-const URL_POSTER = `http://img.omdbapi.com/?apiKey=${API_KEY}`;
+// const URL_POSTER = `http://img.omdbapi.com/?apiKey=${API_KEY}`;
 
 const handleApiError = (error: string) => {
 	console.log('apiError', error);
@@ -26,7 +26,7 @@ const requestHandler = async (query: URLSearchParams) => {
 	}
 };
 
-export const searchMovie = async (
+export const getMoviesByTextSearch = async (
 	search: string,
 	type?: OMDbApiRequestMovieTypes
 ): Promise<Movie[]> => {
@@ -37,4 +37,15 @@ export const searchMovie = async (
 
 	const result = await requestHandler(query);
 	return result.Search ? result.Search : [];
+};
+
+export const getMovieByImdbId = async (
+	imdbId: string
+): Promise<DetailedMovie> => {
+	const query: URLSearchParams = new URLSearchParams({
+		i: imdbId,
+	});
+
+	const result = await requestHandler(query);
+	return result ? result : [];
 };
