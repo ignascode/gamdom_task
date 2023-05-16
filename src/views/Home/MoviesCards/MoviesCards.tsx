@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import useStore from 'store/store';
 import Card from 'components/Card/Card';
 import MovieModal from './MovieModal/MovieModal';
+import CardLoading from 'components/CardLoading/CardLoading';
 // import { MoviesCardsProps } from './MoviesCards.typed';
 
 const MoviesCards: React.FC = observer(() => {
@@ -23,15 +24,19 @@ const MoviesCards: React.FC = observer(() => {
 	return (
 		<>
 			<S.MoviesCards>
-				{GS.movies.map((movie, index) => (
-					<Card
-						key={index}
-						{...movie}
-						onClick={() => {
-							handleOpenModal(movie.imdbID);
-						}}
-					/>
-				))}
+				{GS.moviesLoading
+					? [...Array(10)].map(() => <CardLoading />)
+					: GS.movies.map((movie, index) => (
+							<Card
+								key={index}
+								{...movie}
+								onClick={() => {
+									handleOpenModal(
+										movie.imdbID
+									);
+								}}
+							/>
+					  ))}
 			</S.MoviesCards>
 			<MovieModal
 				isOpen={modalOpen}

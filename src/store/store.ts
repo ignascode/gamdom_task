@@ -6,6 +6,8 @@ class Store {
 	searchTitle: string = '';
 	searchType: OMDbApiRequestMovieTypes | undefined = undefined;
 	movies: Movie[] = [];
+	moviesLoading: boolean = false;
+	movieDetailsLoading: boolean = false;
 
 	constructor() {
 		makeAutoObservable(this, {
@@ -15,6 +17,13 @@ class Store {
 
 	setMovies(movies: Movie[]) {
 		this.movies = movies;
+		this.moviesLoading = false;
+	}
+
+	cleanValues() {
+		this.searchTitle = '';
+		this.searchType = undefined;
+		this.movies = [];
 	}
 }
 

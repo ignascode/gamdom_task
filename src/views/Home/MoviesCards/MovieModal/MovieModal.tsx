@@ -1,20 +1,22 @@
 import React from 'react';
 import { MovieModalProps } from './MovieModal.types';
-
+import { observer } from 'mobx-react-lite';
 import { getMovieByImdbId } from 'services/api';
 import { DetailedMovie } from 'types';
 import * as S from './MovieModal.styled';
 
-const MovieModal: React.FC<MovieModalProps> = (p) => {
+const MovieModal: React.FC<MovieModalProps> = observer((p) => {
 	const [movieDetails, setMovieDetails] = React.useState<DetailedMovie>();
+	const [loading, setLoading] = React.useState(false);
 
 	React.useEffect(() => {
 		const fetch = async () => {
 			if (!p.imdbId) return;
 			const res = await getMovieByImdbId(p.imdbId);
 			setMovieDetails(res);
+			setLoading(false);
 		};
-
+		setLoading(true);
 		fetch();
 	}, [p.imdbId]);
 
@@ -31,7 +33,7 @@ const MovieModal: React.FC<MovieModalProps> = (p) => {
 	};
 
 	return (
-		<S.Modal isOpen={p.isOpen} onClose={p.onClose}>
+		<S.Modal isOpen={p.isOpen} onClose={p.onClose} loading={loading}>
 			<S.TopSection>
 				<S.Img src={movieDetails.Poster} />
 			</S.TopSection>
@@ -54,6 +56,6 @@ const MovieModal: React.FC<MovieModalProps> = (p) => {
 			</S.BottomSection>
 		</S.Modal>
 	);
-};
+});
 
 export default MovieModal;

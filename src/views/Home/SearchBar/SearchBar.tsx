@@ -7,7 +7,7 @@ import Input from 'components/UI/Input/Input';
 import { runInAction } from 'mobx';
 import Dropdown from 'components/UI/Dropdown/Dropdown';
 import { OMDbApiRequestMovieTypes } from 'types';
-// import { SearchBarProps } from './SearchBar.types';
+import debounce from 'util/debounce';
 
 const SearchBar: React.FC<{}> = observer(() => {
 	const GS = useStore();
@@ -15,7 +15,7 @@ const SearchBar: React.FC<{}> = observer(() => {
 	React.useEffect(() => {
 		if (!GS.searchTitle) return;
 
-		const search = async () => {
+		const debouncedSearch = debounce(async () => {
 			const res = await getMoviesByTextSearch(
 				GS.searchTitle,
 				GS.searchType
@@ -25,20 +25,26 @@ const SearchBar: React.FC<{}> = observer(() => {
 					GS.setMovies(res);
 				});
 			}
-		};
+		}, 500);
 
-		search();
+		debouncedSearch();
+		runInAction(() => {
+			GS.moviesLoading = true;
+		});
 	}, [GS.searchTitle, GS.searchType]);
 
 	return (
 		<S.Container>
 			<Input
 				placeholder="Enter movie title"
+				icon="magnifying-glass"
 				onChange={(e) =>
 					runInAction(() => {
 						GS.searchTitle = e.target.value;
+						GS.searchType = undefined;
 					})
 				}
+				value={GS.searchTitle}
 			/>
 			<Dropdown
 				options={Object.values(OMDbApiRequestMovieTypes)}
@@ -46,6 +52,16 @@ const SearchBar: React.FC<{}> = observer(() => {
 					runInAction(() => {
 						GS.searchType =
 							value as OMDbApiRequestMovieTypes;
+					})
+				}
+				selected={GS.searchType}
+			/>
+			<S.Icon
+				icon="xmark"
+				color="red"
+				onClick={() =>
+					runInAction(() => {
+						GS.cleanValues();
 					})
 				}
 			/>

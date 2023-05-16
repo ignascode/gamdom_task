@@ -6,6 +6,7 @@ export const DropdownContainer = styled('div')`
 	position: relative;
 	display: inline-block;
 	width: ${CONTAINER_WIDTH}px;
+	margin-right: 16px;
 `;
 
 export const DropdownButton = styled('button')`
@@ -17,6 +18,7 @@ export const DropdownButton = styled('button')`
 	width: ${CONTAINER_WIDTH}px;
 	text-align: left;
 	text-transform: capitalize;
+	height: 36px;
 `;
 
 export const ButtonText = styled('span')`

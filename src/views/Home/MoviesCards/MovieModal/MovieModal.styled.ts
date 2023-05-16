@@ -18,7 +18,7 @@ export const BottomSection = styled('div')`
 export const Img = styled('img')`
 	height: 400px;
 	width: 600px;
-	object-fit: fill;
+	object-fit: cover;
 	display: block;
 `;
 

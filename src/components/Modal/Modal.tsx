@@ -1,8 +1,14 @@
 import React from 'react';
 import { ModalProps } from './Modal.types';
 import * as S from './Modal.styled';
+import CardLoading from 'components/CardLoading/CardLoading';
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const Modal: React.FC<ModalProps> = ({
+	isOpen,
+	onClose,
+	children,
+	loading,
+}) => {
 	const handleClose = () => {
 		onClose();
 	};
@@ -14,7 +20,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 					<S.ModalContent
 						onClick={(e) => e.stopPropagation()}
 					>
-						{children}
+						{loading ? <CardLoading /> : children}
 					</S.ModalContent>
 				</S.ModalOverlay>
 			)}

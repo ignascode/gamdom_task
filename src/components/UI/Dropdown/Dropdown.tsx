@@ -5,12 +5,8 @@ import OutsideClickListener from './OutsideClickListiner/OutsideClickListiner';
 
 const Dropdown: React.FC<DropdownProps> = (p) => {
 	const [open, setOpen] = React.useState(false);
-	const [selected, setSelected] = React.useState<undefined | string>(
-		undefined
-	);
 
 	const handelOptionSelect = (option: string) => {
-		setSelected(option);
 		p.onSelect(option);
 		setOpen(false);
 	};
@@ -22,7 +18,7 @@ const Dropdown: React.FC<DropdownProps> = (p) => {
 	return (
 		<S.DropdownContainer>
 			<S.DropdownButton onClick={() => setOpen(!open)}>
-				{selected || <S.ButtonText>Type</S.ButtonText>}
+				{p.selected || <S.ButtonText>Type</S.ButtonText>}
 			</S.DropdownButton>
 			<OutsideClickListener onOutsideClick={handleOutsideClick}>
 				<S.DropdownList $open={open}>

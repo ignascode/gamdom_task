@@ -31,6 +31,7 @@ export const Info = styled('div')`
 
 export const Title = styled('span')`
 	font-weight: 600;
+	margin-bottom: 8px;
 `;
 
 export const Type = styled('span')`
