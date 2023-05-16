@@ -10,7 +10,7 @@ const Home: React.FC = observer(() => {
 		<>
 			<Header
 				title="Rotten Pomidors"
-				subtitle="Find your awesome movie"
+				subtitle="Find the movie for today"
 			/>
 			<SearchBar />
 			<MoviesCards />

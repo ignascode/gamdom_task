@@ -1,9 +1,10 @@
 import React from 'react';
 import { makeAutoObservable, observable } from 'mobx';
-import { Movie } from 'types';
+import { Movie, OMDbApiRequestMovieTypes } from 'types';
 
 class Store {
-	searchTitle = '';
+	searchTitle: string = '';
+	searchType: OMDbApiRequestMovieTypes | undefined = undefined;
 	movies: Movie[] = [];
 
 	constructor() {

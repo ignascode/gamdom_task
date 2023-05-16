@@ -7,9 +7,14 @@ export const Input = styled('div')`
 
 export const InputBox = styled('input')`
 	border-radius: 30px;
-	border: solid 1px grey;
+	border: 1px solid #cccccc;
 	height: 32px;
 	text-indent: 16px;
+	margin-right: 16px;
+
+	&:focus {
+		outline: none;
+	}
 `;
 
 export const Lable = styled('span')`

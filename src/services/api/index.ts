@@ -1,9 +1,5 @@
-import { Movie } from 'types';
-import {
-	ApiResponse,
-	OMDbApiRequestParams,
-	RequestHandlerResponse,
-} from './types';
+import { Movie, OMDbApiRequestMovieTypes } from 'types';
+import * as Type from './types';
 
 const API_KEY = '5657bf65';
 const URL = `http://www.omdbapi.com/?apiKey=${API_KEY}`;
@@ -17,17 +13,11 @@ const handleRequestError = (error: unknown) => {
 	console.log('requestError', error);
 };
 
-const requestHandler = async (
-	param: Partial<Record<OMDbApiRequestParams, string>>
-) => {
-	const query = Object.values(param).every((value) => value)
-		? `&${new URLSearchParams(param)}`
-		: '';
-
+const requestHandler = async (query: URLSearchParams) => {
 	try {
-		const request = await fetch(URL + query);
+		const request = await fetch(URL + '&' + query);
 		const result = await request.json();
-		if (result.Response === ApiResponse.False) {
+		if (result.Response === Type.ApiResponse.False) {
 			handleApiError(result.Error);
 		}
 		return result;
@@ -36,7 +26,15 @@ const requestHandler = async (
 	}
 };
 
-export const searchMovie = async (search: string): Promise<Movie[]> => {
-	const result = await requestHandler({ s: search });
+export const searchMovie = async (
+	search: string,
+	type?: OMDbApiRequestMovieTypes
+): Promise<Movie[]> => {
+	const query: URLSearchParams = new URLSearchParams({
+		...(search && { s: search }),
+		...(type && { type: type }),
+	});
+
+	const result = await requestHandler(query);
 	return result.Search ? result.Search : [];
 };

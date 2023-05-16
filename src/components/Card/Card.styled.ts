@@ -9,6 +9,11 @@ export const Card = styled('div')`
 	border: 1px solid #e0e0e0;
 	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
 	overflow: hidden;
+
+	&:hover {
+		cursor: pointer;
+		box-shadow: 0px 2px 4px rgba(0, 0, 1, 0.5);
+	}
 `;
 
 export const Img = styled('img')`

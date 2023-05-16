@@ -5,3 +5,9 @@ export interface Movie {
 	Year: string;
 	imdbId: string;
 }
+
+export enum OMDbApiRequestMovieTypes {
+	Movie = 'movie',
+	Series = 'series',
+	Episode = 'episode',
+}

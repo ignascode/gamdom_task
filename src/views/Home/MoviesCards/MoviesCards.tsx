@@ -8,7 +8,8 @@ import Card from 'components/Card/Card';
 const MoviesCards: React.FC = observer(() => {
 	const GS = useStore();
 
-	if (GS.movies.length === 0) return <div>Search for movies</div>;
+	if (GS.movies.length === 0)
+		return <div>Enter the movie that you a looking for...</div>;
 
 	return (
 		<S.MoviesCards>

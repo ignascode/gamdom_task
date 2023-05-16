@@ -5,6 +5,8 @@ import useStore from 'store/store';
 import { observer } from 'mobx-react-lite';
 import Input from 'components/UI/Input/Input';
 import { runInAction } from 'mobx';
+import Dropdown from 'components/UI/Dropdown/Dropdown';
+import { OMDbApiRequestMovieTypes } from 'types';
 // import { SearchBarProps } from './SearchBar.types';
 
 const SearchBar: React.FC<{}> = observer(() => {
@@ -14,29 +16,33 @@ const SearchBar: React.FC<{}> = observer(() => {
 		if (!GS.searchTitle) return;
 
 		const search = async () => {
-			const res = await searchMovie(GS.searchTitle);
-			console.log('resz', res);
+			const res = await searchMovie(GS.searchTitle, GS.searchType);
 			if (res) {
 				runInAction(() => {
 					GS.setMovies(res);
 				});
 			}
-			// console.log('res', res)
 		};
 
 		search();
-
-		// searchMovie(GS.searchTitle);
-	}, [GS.searchTitle]);
+	}, [GS.searchTitle, GS.searchType]);
 
 	return (
 		<S.Container>
 			<Input
-				// lable="Title"
 				placeholder="Enter movie title"
 				onChange={(e) =>
 					runInAction(() => {
 						GS.searchTitle = e.target.value;
+					})
+				}
+			/>
+			<Dropdown
+				options={Object.values(OMDbApiRequestMovieTypes)}
+				onSelect={(value) =>
+					runInAction(() => {
+						GS.searchType =
+							value as OMDbApiRequestMovieTypes;
 					})
 				}
 			/>
