@@ -1,14 +1,12 @@
-import React from 'react';
-import * as S from './SearchBar.styled';
-import { getMoviesByTextSearch } from 'services/api';
-import useStore from 'store/store';
-import { observer } from 'mobx-react-lite';
-import Input from 'components/UI/Input/Input';
-import { runInAction } from 'mobx';
+import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Dropdown from 'components/UI/Dropdown/Dropdown';
+import { runInAction } from 'mobx';
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import useStore from 'store/store';
 import { OMDbApiRequestMovieTypes } from 'types';
 import debounce from 'util/debounce';
-import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
+import * as S from './SearchBar.styled';
 
 const SearchBar: React.FC<{}> = observer(() => {
 	const GS = useStore();
@@ -16,27 +14,24 @@ const SearchBar: React.FC<{}> = observer(() => {
 	React.useEffect(() => {
 		if (!GS.searchTitle) return;
 
-		const debouncedSearch = debounce(async () => {
-			const res = await getMoviesByTextSearch(
-				GS.searchTitle,
-				GS.searchType
-			);
-			if (res) {
-				runInAction(() => {
-					GS.setMovies(res);
-				});
-			}
-		}, 500);
+		GS.moviesLoading = true;
+
+		const debouncedSearch = debounce(() => {
+			runInAction(async () => {
+				await GS.getMoviesByTextSearch(
+					GS.searchTitle,
+					GS.searchType
+				);
+			});
+		}, 800);
 
 		debouncedSearch();
-		runInAction(() => {
-			GS.moviesLoading = true;
-		});
+		GS.moviesLoading = false;
 	}, [GS.searchTitle, GS.searchType]);
 
 	return (
 		<S.Container>
-			<Input
+			<S.Input
 				placeholder="Enter movie name that you are looking..."
 				icon={faMagnifyingGlass}
 				onChange={(e) =>

@@ -1,27 +1,23 @@
 import React from 'react';
 import { MovieModalProps } from './MovieModal.types';
 import { observer } from 'mobx-react-lite';
-import { getMovieByImdbId } from 'services/api';
-import { DetailedMovie } from 'types';
+import useStore from 'store/store';
 import * as S from './MovieModal.styled';
 import CardLoading from 'components/CardLoading/CardLoading';
 
 const MovieModal: React.FC<MovieModalProps> = observer((p) => {
-	const [movieDetails, setMovieDetails] = React.useState<DetailedMovie>();
-	const [loading, setLoading] = React.useState(false);
+	const GS = useStore();
 
 	React.useEffect(() => {
 		const fetch = async () => {
 			if (!p.imdbId) return;
-			const res = await getMovieByImdbId(p.imdbId);
-			setMovieDetails(res);
-			setLoading(false);
+			await GS.getMovieByImdbId(p.imdbId);
 		};
-		setLoading(true);
+
 		fetch();
 	}, [p.imdbId]);
 
-	if (!movieDetails) return <></>;
+	if (!GS.movieDetails) return <></>;
 
 	const filterEntries = (key: string, value: string) => {
 		if (key === 'Poster') return false;
@@ -46,15 +42,15 @@ const MovieModal: React.FC<MovieModalProps> = observer((p) => {
 		<S.Modal
 			isOpen={p.isOpen}
 			onClose={p.onClose}
-			loading={loading}
+			loading={GS.movieDetailsLoading}
 			loadingComponent={<CardLoading className="movie-modal" />}
 		>
 			<S.TopSection>
-				<S.Img src={movieDetails.Poster} />
+				<S.Img src={GS.movieDetails.Poster} />
 			</S.TopSection>
 			<S.BottomSection>
-				<S.Title>{movieDetails.Title}</S.Title>
-				{Object.entries(movieDetails)
+				<S.Title>{GS.movieDetails.Title}</S.Title>
+				{Object.entries(GS.movieDetails)
 					.filter((entry) =>
 						filterEntries(entry[0], entry[1])
 					)

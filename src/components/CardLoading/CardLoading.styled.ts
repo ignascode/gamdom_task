@@ -35,7 +35,7 @@ export const CardLoadingContainer = styled('div')<{ $className: string }>`
 	${(p) =>
 		p.$className.includes('movie-modal') &&
 		css`
-			height: 400px;
+			height: 850px;
 			width: 600px;
 		`}
 

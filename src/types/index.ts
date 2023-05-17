@@ -1,3 +1,23 @@
+export enum ApiResponse {
+	False = 'False',
+	True = 'True',
+}
+
+export interface RequestHandlerResponse {
+	Response: ApiResponse;
+	Search?: Movie[];
+	Error?: string;
+	totalResults?: number;
+}
+
+export interface OMDbApiRequestParamsInt {
+	s: string;
+	type?: OMDbApiRequestMovieTypes;
+	y?: number;
+}
+
+export type OMDbApiRequestParamsKeys = keyof OMDbApiRequestParamsInt;
+
 export interface Movie {
 	Poster: string;
 	Title: string;
@@ -12,7 +32,7 @@ export enum OMDbApiRequestMovieTypes {
 	Episode = 'episode',
 }
 
-export interface DetailedMovie {
+export interface MovieDetails {
 	Actors: string;
 	Awards: string;
 	BoxOffice: string;
