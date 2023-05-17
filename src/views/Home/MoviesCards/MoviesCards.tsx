@@ -2,8 +2,8 @@ import React from 'react';
 import * as S from './MoviesCards.styled';
 import { observer } from 'mobx-react-lite';
 import useStore from 'store/store';
-import Card from 'components/Card/Card';
-import MovieModal from './MovieModal/MovieModal';
+import MovieCard from 'views/Home/MovieCard/MovieCard';
+import MovieModal from '../MovieModal/MovieModal';
 import CardLoading from 'components/CardLoading/CardLoading';
 // import { MoviesCardsProps } from './MoviesCards.typed';
 
@@ -25,9 +25,11 @@ const MoviesCards: React.FC = observer(() => {
 		<>
 			<S.MoviesCards>
 				{GS.moviesLoading
-					? [...Array(10)].map(() => <CardLoading />)
+					? [...Array(10)].map(() => (
+							<CardLoading className="movie-card" />
+					  ))
 					: GS.movies.map((movie, index) => (
-							<Card
+							<MovieCard
 								key={index}
 								{...movie}
 								onClick={() => {

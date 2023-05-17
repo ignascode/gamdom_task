@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 const fadeInAnimation = keyframes`
   from {
@@ -11,21 +11,33 @@ const fadeInAnimation = keyframes`
   }
 `;
 
-export const CardLoadingContainer = styled('div')`
+export const CardLoadingContainer = styled('div')<{ $className: string }>`
 	display: flex;
 	align-items: center;
 	padding: 16px;
 	background-color: #f5f5f5;
 	animation: ${fadeInAnimation} 0.3s ease-in-out;
-	flex-basis: calc(20% - 16px);
-	margin-right: 16px;
-	margin-bottom: 16px;
-	border-radius: 25px;
 	box-sizing: border-box;
 	border: 1px solid #e0e0e0;
 	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
 	overflow: hidden;
-	height: 427px;
+
+	${(p) =>
+		p.$className.includes('movie-card') &&
+		css`
+			height: 427px;
+			flex-basis: calc(20% - 16px);
+			border-radius: 25px;
+			margin-right: 16px;
+			margin-bottom: 16px;
+		`}
+
+	${(p) =>
+		p.$className.includes('movie-modal') &&
+		css`
+			height: 400px;
+			width: 600px;
+		`}
 
 	.card-loading__image {
 		width: 80px;

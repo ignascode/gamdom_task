@@ -8,6 +8,7 @@ import { runInAction } from 'mobx';
 import Dropdown from 'components/UI/Dropdown/Dropdown';
 import { OMDbApiRequestMovieTypes } from 'types';
 import debounce from 'util/debounce';
+import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const SearchBar: React.FC<{}> = observer(() => {
 	const GS = useStore();
@@ -36,8 +37,8 @@ const SearchBar: React.FC<{}> = observer(() => {
 	return (
 		<S.Container>
 			<Input
-				placeholder="Enter movie title"
-				icon="magnifying-glass"
+				placeholder="Enter movie name that you are looking..."
+				icon={faMagnifyingGlass}
 				onChange={(e) =>
 					runInAction(() => {
 						GS.searchTitle = e.target.value;
@@ -57,7 +58,7 @@ const SearchBar: React.FC<{}> = observer(() => {
 				selected={GS.searchType}
 			/>
 			<S.Icon
-				icon="xmark"
+				icon={faXmark}
 				color="red"
 				onClick={() =>
 					runInAction(() => {

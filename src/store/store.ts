@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeAutoObservable, observable } from 'mobx';
 import { Movie, OMDbApiRequestMovieTypes } from 'types';
+import { makePersistable } from 'mobx-persist-store';
 
 class Store {
 	searchTitle: string = '';
@@ -8,8 +9,15 @@ class Store {
 	movies: Movie[] = [];
 	moviesLoading: boolean = false;
 	movieDetailsLoading: boolean = false;
+	favoriteMovies: string[] = [];
 
 	constructor() {
+		makePersistable(this, {
+			name: 'favoriteMovies',
+			properties: ['favoriteMovies'],
+			storage: window.localStorage,
+		});
+
 		makeAutoObservable(this, {
 			movies: observable,
 		});
@@ -18,6 +26,16 @@ class Store {
 	setMovies(movies: Movie[]) {
 		this.movies = movies;
 		this.moviesLoading = false;
+	}
+
+	addToFavorites(imdbId: string) {
+		this.favoriteMovies.push(imdbId);
+	}
+
+	removeFromFavorites(imdbId: string) {
+		this.favoriteMovies = this.favoriteMovies.filter(
+			(id) => id !== imdbId
+		);
 	}
 
 	cleanValues() {

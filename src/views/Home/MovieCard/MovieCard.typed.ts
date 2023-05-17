@@ -1,5 +1,5 @@
 import { Movie } from 'types';
 
-export interface CardProps extends Movie {
+export interface MovieCardProps extends Movie {
 	onClick: () => void;
 }

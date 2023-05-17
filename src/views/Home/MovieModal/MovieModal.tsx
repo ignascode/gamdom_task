@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { getMovieByImdbId } from 'services/api';
 import { DetailedMovie } from 'types';
 import * as S from './MovieModal.styled';
+import CardLoading from 'components/CardLoading/CardLoading';
 
 const MovieModal: React.FC<MovieModalProps> = observer((p) => {
 	const [movieDetails, setMovieDetails] = React.useState<DetailedMovie>();
@@ -32,8 +33,22 @@ const MovieModal: React.FC<MovieModalProps> = observer((p) => {
 		return true;
 	};
 
+	const capitalizeFirstLetter = (str: string) => {
+		if (str && str.length > 0) {
+			return str
+				.replace(/([a-z])([A-Z])/g, '$1 $2')
+				.replace(/^./, str[0].toUpperCase());
+		}
+		return str;
+	};
+
 	return (
-		<S.Modal isOpen={p.isOpen} onClose={p.onClose} loading={loading}>
+		<S.Modal
+			isOpen={p.isOpen}
+			onClose={p.onClose}
+			loading={loading}
+			loadingComponent={<CardLoading className="movie-modal" />}
+		>
 			<S.TopSection>
 				<S.Img src={movieDetails.Poster} />
 			</S.TopSection>
@@ -46,7 +61,10 @@ const MovieModal: React.FC<MovieModalProps> = observer((p) => {
 					.map((entry) => (
 						<S.Details>
 							<S.DetailName>
-								{entry[0]}:
+								{capitalizeFirstLetter(
+									entry[0]
+								)}
+								:
 							</S.DetailName>
 							<S.DetailValue>
 								{entry[1]}
