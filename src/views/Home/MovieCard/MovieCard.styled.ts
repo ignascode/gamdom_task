@@ -32,6 +32,8 @@ export const Info = styled('div')`
 	padding: 16px;
 	display: flex;
 	flex-direction: column;
+	justify-content: space-between;
+	height: 60px;
 `;
 
 export const Title = styled('span')`

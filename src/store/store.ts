@@ -5,12 +5,16 @@ import {
 	Movie,
 	OMDbApiRequestMovieTypes,
 	ApiResponse,
+	ErrorState,
 } from 'types';
 import { makePersistable } from 'mobx-persist-store';
 import { URL } from 'consts';
 
 class Store {
-	error: string | null | unknown = null;
+	error: ErrorState = {
+		apiError: undefined,
+		requestError: undefined,
+	};
 	searchTitle: string = '';
 	searchType?: OMDbApiRequestMovieTypes = undefined;
 	movies: Movie[] = [];
@@ -33,14 +37,16 @@ class Store {
 
 	private async requestHandler(query: URLSearchParams) {
 		try {
+			this.error.apiError = undefined;
+			this.error.requestError = undefined;
 			const request = await fetch(URL + '&' + query);
 			const result = await request.json();
 			if (result.Response === ApiResponse.False) {
-				this.error = result.Error;
+				this.error.apiError = result.Error;
 			}
 			return result;
 		} catch (error) {
-			this.error = error;
+			this.error.requestError = String(error);
 		}
 	}
 
@@ -57,7 +63,7 @@ class Store {
 		this.movies = result.Search ? result.Search : [];
 	}
 
-	public async getMovieByImdbId(imdbId: string): Promise<void> {
+	public async getMovieByImdbId(imdbId: string): Promise<MovieDetails> {
 		const query: URLSearchParams = new URLSearchParams({
 			i: imdbId,
 		});
@@ -65,6 +71,7 @@ class Store {
 		const result = await this.requestHandler(query);
 		this.movieDetails = result ? result : undefined;
 		this.movieDetailsLoading = false;
+		return result;
 	}
 
 	public addToFavorites(imdbId: string) {
@@ -77,10 +84,26 @@ class Store {
 		);
 	}
 
+	public async getFavoriteMovies(): Promise<void> {
+		const promiseArr = this.favoriteMovies.map((imdbId) =>
+			this.getMovieByImdbId(imdbId)
+		);
+		const result = await Promise.all(promiseArr);
+		this.movies = result;
+	}
+
+	public async removeAllFavorites(): Promise<void> {
+		this.favoriteMovies = [];
+	}
+
 	public cleanValues() {
 		this.searchTitle = '';
 		this.searchType = undefined;
 		this.movies = [];
+		this.error = {
+			apiError: undefined,
+			requestError: undefined,
+		};
 	}
 }
 

@@ -74,4 +74,9 @@ export interface OMDBApiGetByID {
 	res: MovieDetails;
 }
 
+export interface ErrorState {
+	apiError?: string;
+	requestError?: string;
+}
+
 export type OMDbApiSearchRequestParamsKeys = keyof OMDbApiSearchRequestParams;

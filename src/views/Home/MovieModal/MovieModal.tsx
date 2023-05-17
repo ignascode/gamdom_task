@@ -5,6 +5,7 @@ import useStore from 'store/store';
 import * as S from './MovieModal.styled';
 import CardLoading from 'components/CardLoading/CardLoading';
 import { MovieDetailsValues } from 'types';
+import not_found_img from 'assets/image_not_available.png';
 
 const MovieModal: React.FC<MovieModalProps> = observer((p) => {
 	const GS = useStore();
@@ -47,7 +48,16 @@ const MovieModal: React.FC<MovieModalProps> = observer((p) => {
 			loadingComponent={<CardLoading className="movie-modal" />}
 		>
 			<S.TopSection>
-				<S.Img src={GS.movieDetails.Poster} />
+				<S.ImgWrapper>
+					<S.Img
+						src={
+							GS.movieDetails.Poster ===
+							MovieDetailsValues.NA
+								? not_found_img
+								: GS.movieDetails.Poster
+						}
+					/>
+				</S.ImgWrapper>
 			</S.TopSection>
 			<S.BottomSection>
 				<S.Title>{GS.movieDetails.Title}</S.Title>
@@ -56,7 +66,7 @@ const MovieModal: React.FC<MovieModalProps> = observer((p) => {
 						filterEntries(entry[0], entry[1])
 					)
 					.map((entry) => (
-						<S.Details>
+						<div>
 							<S.DetailName>
 								{capitalizeFirstLetter(
 									entry[0]
@@ -66,7 +76,7 @@ const MovieModal: React.FC<MovieModalProps> = observer((p) => {
 							<S.DetailValue>
 								{entry[1]}
 							</S.DetailValue>
-						</S.Details>
+						</div>
 					))}
 			</S.BottomSection>
 		</S.Modal>

@@ -8,24 +8,25 @@ import { OMDbApiRequestMovieTypes } from 'types';
 import debounce from 'util/debounce';
 import * as S from './SearchBar.styled';
 
+import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
+
 const SearchBar: React.FC<{}> = observer(() => {
 	const GS = useStore();
 
 	React.useEffect(() => {
 		if (!GS.searchTitle) return;
-
+		GS.moviesLoading = true;
 		const debouncedSearch = debounce(() => {
 			runInAction(async () => {
-				GS.moviesLoading = true;
 				await GS.getMoviesByTextSearch(
 					GS.searchTitle,
 					GS.searchType
 				);
-				GS.moviesLoading = false;
 			});
 		}, 800);
 
 		debouncedSearch();
+		GS.moviesLoading = false;
 	}, [GS.searchTitle, GS.searchType]);
 
 	return (
@@ -51,6 +52,38 @@ const SearchBar: React.FC<{}> = observer(() => {
 				}
 				selected={GS.searchType}
 			/>
+			{GS.favoriteMovies.length > 0 && (
+				<>
+					<S.Button
+						onClick={() => {
+							runInAction(() => {
+								GS.getFavoriteMovies();
+							});
+						}}
+					>
+						Get my favorite movies
+						<S.Icon
+							icon={solidStar}
+							color="#edb117"
+							onClick={() =>
+								runInAction(() => {
+									GS.cleanValues();
+								})
+							}
+						/>
+					</S.Button>
+					<S.Button
+						onClick={() => {
+							runInAction(() => {
+								GS.removeAllFavorites();
+							});
+						}}
+					>
+						Remove all from favorites
+						<S.Icon icon={faXmark} color="red" />
+					</S.Button>
+				</>
+			)}
 			<S.Icon
 				icon={faXmark}
 				color="red"

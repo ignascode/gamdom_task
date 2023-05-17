@@ -17,8 +17,11 @@ const MoviesCards: React.FC = observer(() => {
 		setModalOpen(true);
 	};
 
-	if (GS.movies.length === 0)
-		return <div>Enter the movie that you a looking for...</div>;
+	if (GS.error.requestError)
+		return <S.ErrorContainer>{GS.error.requestError}</S.ErrorContainer>;
+
+	if (GS.error.apiError)
+		return <S.ErrorContainer>{GS.error.apiError}</S.ErrorContainer>;
 
 	return (
 		<>

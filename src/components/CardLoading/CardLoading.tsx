@@ -1,6 +1,5 @@
 import React from 'react';
 import * as S from './CardLoading.styled';
-// import { CardLoadingProps } from './CardLoading.types';
 
 const CardLoading: React.FC<{ className: string }> = (p) => {
 	return (

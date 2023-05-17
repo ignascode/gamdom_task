@@ -6,7 +6,10 @@ export const Modal = styled(ModalComponent)`
 `;
 
 export const TopSection = styled('div')`
-	display: flex;
+	height: 400px;
+	width: 600px;
+	position: relative;
+	overflow: hidden;
 `;
 
 export const BottomSection = styled('div')`
@@ -15,18 +18,23 @@ export const BottomSection = styled('div')`
 	padding: 16px;
 `;
 
+export const ImgWrapper = styled('div')`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+`;
+
 export const Img = styled('img')`
-	height: 400px;
-	width: 600px;
-	object-fit: cover;
-	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: fill;
 `;
 
 export const Title = styled('span')`
 	font-size: 32px;
 `;
-
-export const Details = styled('div')``;
 
 export const DetailName = styled('span')`
 	font-size: 14px;
