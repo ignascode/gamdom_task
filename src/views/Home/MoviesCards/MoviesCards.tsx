@@ -5,7 +5,6 @@ import useStore from 'store/store';
 import MovieCard from 'views/Home/MovieCard/MovieCard';
 import MovieModal from '../MovieModal/MovieModal';
 import CardLoading from 'components/CardLoading/CardLoading';
-// import { MoviesCardsProps } from './MoviesCards.typed';
 
 const MoviesCards: React.FC = observer(() => {
 	const GS = useStore();

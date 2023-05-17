@@ -1,12 +1,13 @@
 import React from 'react';
 import * as S from './MovieCard.styled';
 import { observer } from 'mobx-react-lite';
-import { MovieCardProps } from './MovieCard.typed';
+import { MovieCardProps } from './MovieCard.types';
 import not_found_img from 'assets/image_not_available.png';
 import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import { runInAction } from 'mobx';
 import useStore from 'store/store';
+import { MovieDetailsValues } from 'types';
 
 const MovieCard: React.FC<MovieCardProps> = observer((p) => {
 	const GS = useStore();
@@ -25,7 +26,13 @@ const MovieCard: React.FC<MovieCardProps> = observer((p) => {
 
 	return (
 		<S.Card onClick={p.onClick}>
-			<S.Img src={p.Poster === 'N/A' ? not_found_img : p.Poster} />
+			<S.Img
+				src={
+					p.Poster === MovieDetailsValues.NA
+						? not_found_img
+						: p.Poster
+				}
+			/>
 			<S.Info>
 				<S.TitleAndYear>
 					<S.Title>{p.Title}</S.Title>

@@ -7,17 +7,15 @@ import {
 	ApiResponse,
 } from 'types';
 import { makePersistable } from 'mobx-persist-store';
-
-const API_KEY = '5657bf65';
-const URL = `http://www.omdbapi.com/?apiKey=${API_KEY}`;
+import { URL } from 'consts';
 
 class Store {
 	error: string | null | unknown = null;
 	searchTitle: string = '';
-	searchType: OMDbApiRequestMovieTypes | undefined = undefined;
+	searchType?: OMDbApiRequestMovieTypes = undefined;
 	movies: Movie[] = [];
 	moviesLoading: boolean = false;
-	movieDetails: MovieDetails | undefined = undefined;
+	movieDetails?: MovieDetails = undefined;
 	movieDetailsLoading: boolean = false;
 	favoriteMovies: string[] = [];
 
@@ -33,7 +31,7 @@ class Store {
 		});
 	}
 
-	requestHandler = async (query: URLSearchParams) => {
+	private async requestHandler(query: URLSearchParams) {
 		try {
 			const request = await fetch(URL + '&' + query);
 			const result = await request.json();
@@ -44,12 +42,12 @@ class Store {
 		} catch (error) {
 			this.error = error;
 		}
-	};
+	}
 
-	getMoviesByTextSearch = async (
+	public async getMoviesByTextSearch(
 		search: string,
 		type?: OMDbApiRequestMovieTypes
-	): Promise<void> => {
+	): Promise<void> {
 		const query: URLSearchParams = new URLSearchParams({
 			...(search && { s: search }),
 			...(type && { type: type }),
@@ -57,9 +55,9 @@ class Store {
 
 		const result = await this.requestHandler(query);
 		this.movies = result.Search ? result.Search : [];
-	};
+	}
 
-	getMovieByImdbId = async (imdbId: string): Promise<void> => {
+	public async getMovieByImdbId(imdbId: string): Promise<void> {
 		const query: URLSearchParams = new URLSearchParams({
 			i: imdbId,
 		});
@@ -67,19 +65,19 @@ class Store {
 		const result = await this.requestHandler(query);
 		this.movieDetails = result ? result : undefined;
 		this.movieDetailsLoading = false;
-	};
+	}
 
-	addToFavorites(imdbId: string) {
+	public addToFavorites(imdbId: string) {
 		this.favoriteMovies.push(imdbId);
 	}
 
-	removeFromFavorites(imdbId: string) {
+	public removeFromFavorites(imdbId: string) {
 		this.favoriteMovies = this.favoriteMovies.filter(
 			(id) => id !== imdbId
 		);
 	}
 
-	cleanValues() {
+	public cleanValues() {
 		this.searchTitle = '';
 		this.searchType = undefined;
 		this.movies = [];

@@ -1,7 +1,6 @@
 import React from 'react';
-
 import { observer } from 'mobx-react-lite';
-import Header from 'components/Header/Header';
+import Header from './Header/Header';
 import SearchBar from 'views/Home/SearchBar/SearchBar';
 import MoviesCards from './MoviesCards/MoviesCards';
 

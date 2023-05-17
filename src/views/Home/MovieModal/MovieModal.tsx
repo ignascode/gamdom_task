@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import useStore from 'store/store';
 import * as S from './MovieModal.styled';
 import CardLoading from 'components/CardLoading/CardLoading';
+import { MovieDetailsValues } from 'types';
 
 const MovieModal: React.FC<MovieModalProps> = observer((p) => {
 	const GS = useStore();
@@ -25,7 +26,7 @@ const MovieModal: React.FC<MovieModalProps> = observer((p) => {
 		if (key === 'Ratings') return false;
 		if (key === 'imdbID') return false;
 		if (key === 'Response') return false;
-		if (value === 'N/A') return false;
+		if (value === MovieDetailsValues.NA) return false;
 		return true;
 	};
 

@@ -29,9 +29,9 @@ export const Lable = styled('span')`
 export const IconContainer = styled('span')`
 	position: absolute;
 	top: 45%;
-	left: 10px; /* Adjust left position as needed */
+	left: 10px;
 	transform: translateY(-50%);
-	color: #999; /* Adjust color as needed */
+	color: #999;
 `;
 
 export const Icon = styled(FAIcon)`
