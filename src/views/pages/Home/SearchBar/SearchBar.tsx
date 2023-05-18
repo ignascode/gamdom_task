@@ -15,18 +15,16 @@ const SearchBar: React.FC<{}> = observer(() => {
 
 	React.useEffect(() => {
 		if (!GS.searchTitle) return;
-		GS.moviesLoading = true;
-		const debouncedSearch = debounce(() => {
-			runInAction(async () => {
-				await GS.getMoviesByTextSearch(
-					GS.searchTitle,
-					GS.searchType
-				);
-			});
+
+		runInAction(() => {
+			GS.moviesLoading = true;
+		});
+
+		const debouncedSearch = debounce(async () => {
+			await GS.getMoviesByTextSearch(GS.searchTitle, GS.searchType);
 		}, 800);
 
 		debouncedSearch();
-		GS.moviesLoading = false;
 	}, [GS.searchTitle, GS.searchType]);
 
 	return (

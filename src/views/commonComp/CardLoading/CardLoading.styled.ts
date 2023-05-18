@@ -13,7 +13,7 @@ const fadeInAnimation = keyframes`
 
 export const CardLoadingContainer = styled('div')<{ $className: string }>`
 	display: flex;
-	align-items: center;
+	flex-direction: column;
 	padding: 16px;
 	background-color: #f5f5f5;
 	animation: ${fadeInAnimation} 0.3s ease-in-out;
@@ -40,15 +40,22 @@ export const CardLoadingContainer = styled('div')<{ $className: string }>`
 		`}
 `;
 
-export const CardLoadingImage = styled('div')`
-	width: 80px;
-	height: 80px;
+export const CardLoadingImage = styled('div')<{ $className: string }>`
+	width: 160px;
+	height: 160px;
+	margin-bottom: 16px;
 	background-color: #ccc;
 	border-radius: 4px;
+
+	${(p) =>
+		p.$className.includes('movie-modal') &&
+		css`
+			height: 400px;
+			width: 100%;
+		`}
 `;
 
 export const CardLoadingContent = styled('div')`
-	margin-left: 16px;
 	flex-grow: 1;
 `;
 
@@ -61,8 +68,9 @@ export const CardLoadingTitle = styled('div')`
 `;
 
 export const CardLoadingDescription = styled('div')`
-	width: 80%;
+	width: 100%;
 	height: 12px;
 	background-color: #ccc;
 	border-radius: 4px;
+	margin-bottom: 8px;
 `;

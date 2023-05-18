@@ -57,6 +57,7 @@ class Store {
 
 		const result = await this.requestHandler(query);
 		this.movies = result.Search ? result.Search : [];
+		this.moviesLoading = false;
 	}
 
 	public async getMovieByImdbId(imdbId: string): Promise<MovieDetails> {
