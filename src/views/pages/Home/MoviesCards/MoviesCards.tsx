@@ -17,12 +17,6 @@ const MoviesCards: React.FC = observer(() => {
 		setModalOpen(true);
 	};
 
-	if (GS.error.requestError)
-		return <S.ErrorContainer>{GS.error.requestError}</S.ErrorContainer>;
-
-	if (GS.error.apiError)
-		return <S.ErrorContainer>{GS.error.apiError}</S.ErrorContainer>;
-
 	return (
 		<>
 			<S.MoviesCards>

@@ -7,7 +7,7 @@ import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import { runInAction } from 'mobx';
 import useStore from 'store/store';
-import { MovieDetailsValues } from 'types';
+import { NA } from 'consts';
 
 const MovieCard: React.FC<MovieCardProps> = observer((p) => {
 	const GS = useStore();
@@ -26,13 +26,7 @@ const MovieCard: React.FC<MovieCardProps> = observer((p) => {
 
 	return (
 		<S.Card onClick={p.onClick}>
-			<S.Img
-				src={
-					p.Poster === MovieDetailsValues.NA
-						? not_found_img
-						: p.Poster
-				}
-			/>
+			<S.Img src={p.Poster === NA ? not_found_img : p.Poster} />
 			<S.Info>
 				<S.TitleAndYear>
 					<S.Title>{p.Title}</S.Title>

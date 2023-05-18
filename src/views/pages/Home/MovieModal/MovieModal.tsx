@@ -4,8 +4,9 @@ import { observer } from 'mobx-react-lite';
 import useStore from 'store/store';
 import * as S from './MovieModal.styled';
 import CardLoading from 'views/commonComp/CardLoading/CardLoading';
-import { MovieDetailsValues } from 'types';
 import not_found_img from 'assets/image_not_available.png';
+import { NA } from 'consts';
+import capitalizeFirstLetter from 'util/capitalizeFirstLetter';
 
 const MovieModal: React.FC<MovieModalProps> = observer((p) => {
 	const GS = useStore();
@@ -22,22 +23,31 @@ const MovieModal: React.FC<MovieModalProps> = observer((p) => {
 	if (!GS.movieDetails) return <></>;
 
 	const filterEntries = (key: string, value: string) => {
-		if (key === 'Poster') return false;
-		if (key === 'Title') return false;
-		if (key === 'Ratings') return false;
-		if (key === 'imdbID') return false;
-		if (key === 'Response') return false;
-		if (value === MovieDetailsValues.NA) return false;
-		return true;
-	};
+		const DISPLAY_KEYS = [
+			'Actors',
+			'Awards',
+			'BoxOffice',
+			'Country',
+			'DVD',
+			'Director',
+			'Genre',
+			'Language',
+			'Plot',
+			'Production',
+			'Rated',
+			'Released',
+			'Runtime',
+			'Writer',
+			'Year',
+			'imdbRating',
+			'imdbVotes',
+		];
+		const UNDISPLAYED_VALUES = [NA];
 
-	const capitalizeFirstLetter = (str: string) => {
-		if (str && str.length > 0) {
-			return str
-				.replace(/([a-z])([A-Z])/g, '$1 $2')
-				.replace(/^./, str[0].toUpperCase());
-		}
-		return str;
+		if (UNDISPLAYED_VALUES.includes(value)) return false;
+		if (DISPLAY_KEYS.includes(key)) return true;
+
+		return false;
 	};
 
 	return (
@@ -51,8 +61,7 @@ const MovieModal: React.FC<MovieModalProps> = observer((p) => {
 				<S.ImgWrapper>
 					<S.Img
 						src={
-							GS.movieDetails.Poster ===
-							MovieDetailsValues.NA
+							GS.movieDetails.Poster === NA
 								? not_found_img
 								: GS.movieDetails.Poster
 						}
@@ -62,20 +71,15 @@ const MovieModal: React.FC<MovieModalProps> = observer((p) => {
 			<S.BottomSection>
 				<S.Title>{GS.movieDetails.Title}</S.Title>
 				{Object.entries(GS.movieDetails)
-					.filter((entry) =>
-						filterEntries(entry[0], entry[1])
+					.filter(([key, value]) =>
+						filterEntries(key, value)
 					)
-					.map((entry) => (
+					.map(([key, value]) => (
 						<div>
 							<S.DetailName>
-								{capitalizeFirstLetter(
-									entry[0]
-								)}
-								:
+								{capitalizeFirstLetter(key)}:
 							</S.DetailName>
-							<S.DetailValue>
-								{entry[1]}
-							</S.DetailValue>
+							<S.DetailValue>{value}</S.DetailValue>
 						</div>
 					))}
 			</S.BottomSection>

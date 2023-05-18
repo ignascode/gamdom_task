@@ -1,7 +1,3 @@
-export enum MovieDetailsValues {
-	NA = 'N/A',
-}
-
 export enum OMDbApiRequestMovieTypes {
 	Movie = 'movie',
 	Series = 'series',

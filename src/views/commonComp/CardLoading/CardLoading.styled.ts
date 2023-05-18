@@ -29,7 +29,6 @@ export const CardLoadingContainer = styled('div')<{ $className: string }>`
 			height: 427px;
 			flex-basis: calc(20% - 16px);
 			border-radius: 25px;
-			margin-right: 16px;
 			margin-bottom: 16px;
 		`}
 
