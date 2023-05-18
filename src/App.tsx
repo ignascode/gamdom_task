@@ -1,4 +1,4 @@
-import Home from 'views/pages//Home/Home';
+import Home from 'views/pages/Home/Home';
 import MainLayout from 'views/commonComp/Layouts/MainLayout/MainLayout';
 
 const App: React.FC<{}> = () => {
