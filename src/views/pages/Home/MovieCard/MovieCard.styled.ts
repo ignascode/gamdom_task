@@ -2,9 +2,6 @@ import Icon from 'views/commonComp/UI/Icon/Icon';
 import styled from 'styled-components';
 
 export const Card = styled('div')`
-	flex-basis: calc(20% - 16px); /* 33% minus the margin */
-
-	margin-bottom: 16px;
 	border-radius: 25px;
 	box-sizing: border-box;
 	border: 1px solid #e0e0e0;
@@ -14,10 +11,6 @@ export const Card = styled('div')`
 	&:hover {
 		cursor: pointer;
 		box-shadow: 0px 2px 4px rgba(0, 0, 1, 0.5);
-	}
-
-	&:not(:nth-child(5n)) {
-		margin-right: 16px;
 	}
 `;
 

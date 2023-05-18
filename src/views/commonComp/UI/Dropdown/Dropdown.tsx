@@ -3,11 +3,16 @@ import { DropdownProps } from './Dropdown.types';
 import * as S from './Dropdown.styled';
 import OutsideClickListener from './OutsideClickListiner/OutsideClickListiner';
 
-const Dropdown: React.FC<DropdownProps> = (p) => {
+const Dropdown: React.FC<DropdownProps> = ({
+	selected,
+	options,
+	onSelect,
+	...rest
+}) => {
 	const [open, setOpen] = React.useState(false);
 
 	const handelOptionSelect = (option: string) => {
-		p.onSelect(option);
+		onSelect(option);
 		setOpen(false);
 	};
 
@@ -16,13 +21,13 @@ const Dropdown: React.FC<DropdownProps> = (p) => {
 	};
 
 	return (
-		<S.DropdownContainer>
+		<S.DropdownContainer {...rest}>
 			<S.DropdownButton onClick={() => setOpen(!open)}>
-				{p.selected || <S.ButtonText>Type</S.ButtonText>}
+				{selected || <S.ButtonText>Type</S.ButtonText>}
 			</S.DropdownButton>
 			<OutsideClickListener onOutsideClick={handleOutsideClick}>
 				<S.DropdownList $open={open}>
-					{p.options.map((option, index) => (
+					{options.map((option, index) => (
 						<S.DropdownItem
 							key={index}
 							onClick={() =>

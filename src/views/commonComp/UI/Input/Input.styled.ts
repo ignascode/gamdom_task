@@ -10,6 +10,8 @@ export const InputBox = styled('input')`
 	border: 1px solid #cccccc;
 	height: 32px;
 	text-indent: 26px;
+	width: 100%;
+	padding: 0;
 
 	&:focus {
 		outline: none;

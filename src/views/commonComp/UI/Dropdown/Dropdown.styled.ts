@@ -6,7 +6,6 @@ export const DropdownContainer = styled('div')`
 	position: relative;
 	display: inline-block;
 	width: ${CONTAINER_WIDTH}px;
-	margin-right: 16px;
 `;
 
 export const DropdownButton = styled('button')`

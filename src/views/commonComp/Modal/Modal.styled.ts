@@ -16,6 +16,6 @@ export const ModalOverlay = styled('div')`
 export const ModalContent = styled('div')`
 	background-color: #ffffff;
 	overflow: hidden;
-	border-radius: 4px;
+	border-radius: 25px;
 	width: min-content;
 `;

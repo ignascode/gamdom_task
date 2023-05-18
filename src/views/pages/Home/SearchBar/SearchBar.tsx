@@ -1,5 +1,5 @@
 import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
-import Dropdown from 'views/commonComp/UI/Dropdown/Dropdown';
+
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -42,7 +42,7 @@ const SearchBar: React.FC<{}> = observer(() => {
 				}
 				value={GS.searchTitle}
 			/>
-			<Dropdown
+			<S.Dropdown
 				options={Object.values(OMDbApiRequestMovieTypes)}
 				onSelect={(value) =>
 					runInAction(() => {
@@ -61,7 +61,6 @@ const SearchBar: React.FC<{}> = observer(() => {
 							});
 						}}
 					>
-						Get my favorite movies
 						<S.Icon
 							icon={solidStar}
 							color="#edb117"
@@ -71,6 +70,7 @@ const SearchBar: React.FC<{}> = observer(() => {
 								})
 							}
 						/>
+						Get my favorite movies
 					</S.Button>
 					<S.Button
 						onClick={() => {
@@ -79,20 +79,21 @@ const SearchBar: React.FC<{}> = observer(() => {
 							});
 						}}
 					>
-						Remove all from favorites
 						<S.Icon icon={faXmark} color="red" />
+						Remove all from favorites
 					</S.Button>
 				</>
 			)}
-			<S.Icon
-				icon={faXmark}
-				color="red"
+			<S.Button
 				onClick={() =>
 					runInAction(() => {
 						GS.cleanValues();
 					})
 				}
-			/>
+			>
+				<S.Icon icon={faXmark} color="red" />
+				Reset search
+			</S.Button>
 		</S.Container>
 	);
 });
