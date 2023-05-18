@@ -1,3 +1,4 @@
+import { MEDIA_QUERY } from 'consts';
 import styled, { css, keyframes } from 'styled-components';
 
 const fadeInAnimation = keyframes`
@@ -37,6 +38,16 @@ export const CardLoadingContainer = styled('div')<{ $className: string }>`
 		css`
 			height: 850px;
 			width: 600px;
+
+			@media (max-width: ${MEDIA_QUERY.lg}px) {
+				height: 750px;
+				width: 500px;
+			}
+
+			@media (max-width: ${MEDIA_QUERY.md}px) {
+				height: 650px;
+				width: 400px;
+			}
 		`}
 `;
 
