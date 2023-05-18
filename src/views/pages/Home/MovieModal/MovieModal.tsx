@@ -3,7 +3,7 @@ import { MovieModalProps } from './MovieModal.types';
 import { observer } from 'mobx-react-lite';
 import useStore from 'store/store';
 import * as S from './MovieModal.styled';
-import CardLoading from 'components/CardLoading/CardLoading';
+import CardLoading from 'views/commonComp/CardLoading/CardLoading';
 import { MovieDetailsValues } from 'types';
 import not_found_img from 'assets/image_not_available.png';
 

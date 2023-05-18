@@ -1,5 +1,5 @@
 import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
-import Dropdown from 'components/UI/Dropdown/Dropdown';
+import Dropdown from 'views/commonComp/UI/Dropdown/Dropdown';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

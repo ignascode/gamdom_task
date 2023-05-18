@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { default as ModalComponent } from 'components/Modal/Modal';
+import { default as ModalComponent } from 'views/commonComp/Modal/Modal';
 
 export const Modal = styled(ModalComponent)`
 	width: calc(100vw - 64px);

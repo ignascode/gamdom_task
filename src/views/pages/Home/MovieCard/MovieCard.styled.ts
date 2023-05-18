@@ -1,4 +1,4 @@
-import Icon from 'components/UI/Icon/Icon';
+import Icon from 'views/commonComp/UI/Icon/Icon';
 import styled from 'styled-components';
 
 export const Card = styled('div')`

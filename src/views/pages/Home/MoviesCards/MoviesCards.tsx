@@ -2,9 +2,9 @@ import React from 'react';
 import * as S from './MoviesCards.styled';
 import { observer } from 'mobx-react-lite';
 import useStore from 'store/store';
-import MovieCard from 'views/Home/MovieCard/MovieCard';
+import MovieCard from '../MovieCard/MovieCard';
 import MovieModal from '../MovieModal/MovieModal';
-import CardLoading from 'components/CardLoading/CardLoading';
+import CardLoading from 'views/commonComp/CardLoading/CardLoading';
 
 const MoviesCards: React.FC = observer(() => {
 	const GS = useStore();

@@ -1,12 +1,8 @@
 import React from 'react';
 import { makeAutoObservable, observable } from 'mobx';
-import {
-	MovieDetails,
-	Movie,
-	OMDbApiRequestMovieTypes,
-	ApiResponse,
-	ErrorState,
-} from 'types';
+import { MovieDetails, Movie, ErrorState } from 'types';
+import { ApiResponse } from 'types/OMDBApi';
+import { OMDbApiRequestMovieTypes } from 'types';
 import { makePersistable } from 'mobx-persist-store';
 import { URL } from 'consts';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import * as S from './Subtitle.styled';
-import { SubtitleProps } from './Subtitle.typed';
+import { SubtitleProps } from './Subtitle.types';
 
 const Subtitle: React.FC<SubtitleProps> = (p) => (
 	<S.Subtitle>{p.children}</S.Subtitle>

@@ -1,16 +1,11 @@
-export enum ApiResponse {
-	False = 'False',
-	True = 'True',
+export enum MovieDetailsValues {
+	NA = 'N/A',
 }
 
 export enum OMDbApiRequestMovieTypes {
 	Movie = 'movie',
 	Series = 'series',
 	Episode = 'episode',
-}
-
-export enum MovieDetailsValues {
-	NA = 'N/A',
 }
 
 export interface Movie {
@@ -20,7 +15,6 @@ export interface Movie {
 	Year: string;
 	imdbID: string;
 }
-
 export interface MovieDetails {
 	Actors: string;
 	Awards: string;
@@ -49,34 +43,7 @@ export interface MovieDetails {
 	imdbVotes: string;
 }
 
-export interface OMDbApiSearchRequestParams {
-	s: string;
-	type?: OMDbApiRequestMovieTypes;
-	y?: number;
-}
-
-export interface OMDbApiGetByIDRequestParams {
-	i: string; // valid imdb ID
-}
-
-export interface OMDBApiSearch {
-	req: OMDbApiSearchRequestParams;
-	res: {
-		Response: ApiResponse;
-		Search?: Movie[];
-		Error?: string;
-		totalResults?: number;
-	};
-}
-
-export interface OMDBApiGetByID {
-	req: OMDbApiGetByIDRequestParams;
-	res: MovieDetails;
-}
-
 export interface ErrorState {
 	apiError?: string;
 	requestError?: string;
 }
-
-export type OMDbApiSearchRequestParamsKeys = keyof OMDbApiSearchRequestParams;

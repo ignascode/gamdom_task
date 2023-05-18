@@ -3,8 +3,6 @@ import { default as FAIcon } from '../Icon/Icon';
 
 export const Input = styled('div')`
 	position: relative;
-	/* display: flex;
-	flex-direction: column; */
 `;
 
 export const InputBox = styled('input')`
@@ -12,7 +10,6 @@ export const InputBox = styled('input')`
 	border: 1px solid #cccccc;
 	height: 32px;
 	text-indent: 26px;
-	margin-right: 16px;
 
 	&:focus {
 		outline: none;

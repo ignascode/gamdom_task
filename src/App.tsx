@@ -1,5 +1,5 @@
-import Home from './views/Home/Home';
-import MainLayout from 'components/Layouts/MainLayout/MainLayout';
+import Home from 'views/pages//Home/Home';
+import MainLayout from 'views/commonComp/Layouts/MainLayout/MainLayout';
 
 const App: React.FC<{}> = () => {
 	return (

@@ -38,31 +38,31 @@ export const CardLoadingContainer = styled('div')<{ $className: string }>`
 			height: 850px;
 			width: 600px;
 		`}
+`;
 
-	.card-loading__image {
-		width: 80px;
-		height: 80px;
-		background-color: #ccc;
-		border-radius: 4px;
-	}
+export const CardLoadingImage = styled('div')`
+	width: 80px;
+	height: 80px;
+	background-color: #ccc;
+	border-radius: 4px;
+`;
 
-	.card-loading__content {
-		margin-left: 16px;
-		flex-grow: 1;
-	}
+export const CardLoadingContent = styled('div')`
+	margin-left: 16px;
+	flex-grow: 1;
+`;
 
-	.card-loading__title {
-		width: 60%;
-		height: 16px;
-		margin-bottom: 8px;
-		background-color: #ccc;
-		border-radius: 4px;
-	}
+export const CardLoadingTitle = styled('div')`
+	width: 60%;
+	height: 16px;
+	margin-bottom: 8px;
+	background-color: #ccc;
+	border-radius: 4px;
+`;
 
-	.card-loading__description {
-		width: 80%;
-		height: 12px;
-		background-color: #ccc;
-		border-radius: 4px;
-	}
+export const CardLoadingDescription = styled('div')`
+	width: 80%;
+	height: 12px;
+	background-color: #ccc;
+	border-radius: 4px;
 `;
