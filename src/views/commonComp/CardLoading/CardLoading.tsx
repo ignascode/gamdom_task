@@ -1,21 +1,21 @@
 import React from 'react';
 import * as S from './CardLoading.styled';
+import { CardLoadingProps } from './CardLoading.types';
 
-const CardLoading: React.FC<{ className: string }> = (p) => {
+const CardLoading: React.FC<CardLoadingProps> = ({
+	descriptionElements,
+	...p
+}) => {
 	return (
-		<S.CardLoadingContainer $className={p.className}>
-			<S.CardLoadingImage $className={p.className} />
+		<S.CardLoadingContainer {...p}>
+			<S.CardLoadingImage />
 			<S.CardLoadingContent>
 				<S.CardLoadingTitle />
 				<S.CardLoadingDescription />
-				{p.className === 'movie-modal' && (
-					<>
+				{descriptionElements &&
+					[...Array(descriptionElements)].map(() => (
 						<S.CardLoadingDescription />
-						<S.CardLoadingDescription />
-						<S.CardLoadingDescription />
-						<S.CardLoadingDescription />
-					</>
-				)}
+					))}
 			</S.CardLoadingContent>
 		</S.CardLoadingContainer>
 	);

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type DebounceFunction<T extends (...args: any[]) => any> = (
 	...args: Parameters<T>
 ) => void;

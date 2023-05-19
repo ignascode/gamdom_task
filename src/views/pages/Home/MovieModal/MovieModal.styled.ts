@@ -1,6 +1,8 @@
 import { MEDIA_QUERY } from 'consts';
 import styled from 'styled-components';
 import { default as ModalComponent } from 'views/commonComp/Modal/Modal';
+import { default as CardLoadingComponent } from 'views/commonComp/CardLoading/CardLoading';
+import { CardLoadingImage } from 'views/commonComp/CardLoading/CardLoading.styled';
 
 export const Modal = styled(ModalComponent)`
 	width: calc(100vw - 64px);
@@ -74,5 +76,25 @@ export const DetailValue = styled('span')`
 
 	@media (max-width: ${MEDIA_QUERY.lg}px) {
 		font-size: 10px;
+	}
+`;
+
+export const CardLoading = styled(CardLoadingComponent)`
+	height: 850px;
+	width: 600px;
+
+	@media (max-width: ${MEDIA_QUERY.lg}px) {
+		height: 750px;
+		width: 500px;
+	}
+
+	@media (max-width: ${MEDIA_QUERY.md}px) {
+		height: 650px;
+		width: 400px;
+	}
+
+	${CardLoadingImage} {
+		height: 400px;
+		width: 100%;
 	}
 `;

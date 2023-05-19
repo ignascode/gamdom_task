@@ -15,19 +15,20 @@ export interface OMDbApiGetByIDRequestParams {
 	i: string; // valid imdb ID
 }
 
-export interface OMDBApiSearch {
-	req: OMDbApiSearchRequestParams;
-	res: {
-		Response: ApiResponse;
-		Search?: Movie[];
-		Error?: string;
-		totalResults?: number;
+export interface OMDBApi {
+	OMDBApiSearch: {
+		req: OMDbApiSearchRequestParams;
+		res: {
+			Response: ApiResponse;
+			Search?: Movie[];
+			Error?: string;
+			totalResults?: number;
+		};
 	};
-}
-
-export interface OMDBApiGetByID {
-	req: OMDbApiGetByIDRequestParams;
-	res: MovieDetails;
+	OMDBApiGetByID: {
+		req: OMDbApiGetByIDRequestParams;
+		res: MovieDetails;
+	};
 }
 
 export type OMDbApiSearchRequestParamsKeys = keyof OMDbApiSearchRequestParams;

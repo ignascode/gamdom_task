@@ -10,22 +10,42 @@ import * as S from './SearchBar.styled';
 
 import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 
-const SearchBar: React.FC<{}> = observer(() => {
+const debouncedSearch = debounce((fn: () => void) => {
+	fn();
+}, 800);
+
+const SearchBar: React.FC = observer(() => {
 	const GS = useStore();
 
 	React.useEffect(() => {
 		if (!GS.searchTitle) return;
-
 		runInAction(() => {
 			GS.moviesLoading = true;
 		});
-
-		const debouncedSearch = debounce(async () => {
-			await GS.getMoviesByTextSearch(GS.searchTitle, GS.searchType);
-		}, 800);
-
-		debouncedSearch();
-	}, [GS.searchTitle, GS.searchType]);
+		debouncedSearch(async () => {
+			runInAction(() => {
+				GS.moviesLoading = true;
+			});
+			try {
+				const res = await GS.getMoviesByTextSearch(
+					GS.searchTitle,
+					GS.searchType
+				);
+				runInAction(() => {
+					if (res.Search) {
+						GS.movies = res.Search;
+					}
+				});
+			} catch (e) {
+				GS.movies = [];
+				console.error('Error while getting movie details', e);
+			} finally {
+				runInAction(() => {
+					GS.moviesLoading = false;
+				});
+			}
+		});
+	}, [GS.searchTitle, GS.searchType, GS]);
 
 	return (
 		<S.Container>
@@ -59,15 +79,7 @@ const SearchBar: React.FC<{}> = observer(() => {
 							});
 						}}
 					>
-						<S.Icon
-							icon={solidStar}
-							color="#edb117"
-							onClick={() =>
-								runInAction(() => {
-									GS.cleanValues();
-								})
-							}
-						/>
+						<S.Icon icon={solidStar} color="#edb117" />
 						Get my favorite movies
 					</S.Button>
 					<S.Button

@@ -4,11 +4,10 @@ import { InputProps } from './Input.types';
 import { observer } from 'mobx-react-lite';
 
 const Input: React.FC<InputProps> = observer(
-	({ lable, icon, placeholder, ...rest }) => {
+	({ icon, placeholder, value, ...rest }) => {
 		return (
 			<S.Input {...rest}>
-				{lable && <S.Lable>{lable}</S.Lable>}
-				<S.InputBox placeholder={placeholder} />
+				<S.InputBox placeholder={placeholder} value={value} />
 				{icon && (
 					<S.IconContainer>
 						<S.Icon icon={icon} />

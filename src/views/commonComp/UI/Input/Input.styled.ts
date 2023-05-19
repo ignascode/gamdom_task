@@ -18,13 +18,6 @@ export const InputBox = styled('input')`
 	}
 `;
 
-export const Lable = styled('span')`
-	font-size: 14px;
-	margin-bottom: 8px;
-	font-weight: 400;
-	margin-left: 12px;
-`;
-
 export const IconContainer = styled('span')`
 	position: absolute;
 	top: 45%;

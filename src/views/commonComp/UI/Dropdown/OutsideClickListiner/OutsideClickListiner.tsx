@@ -7,14 +7,17 @@ const OutsideClickListener: React.FC<OutsideClickListenerProps> = ({
 }) => {
 	const containerRef = React.useRef<HTMLDivElement>(null);
 
-	const handleClickOutside = (event: MouseEvent) => {
-		if (
-			containerRef.current &&
-			!containerRef.current.contains(event.target as Node)
-		) {
-			onOutsideClick();
-		}
-	};
+	const handleClickOutside = React.useCallback(
+		(event: MouseEvent) => {
+			if (
+				containerRef.current &&
+				!containerRef.current.contains(event.target as Node)
+			) {
+				onOutsideClick();
+			}
+		},
+		[onOutsideClick]
+	);
 
 	React.useEffect(() => {
 		document.addEventListener('mousedown', handleClickOutside);
@@ -22,7 +25,7 @@ const OutsideClickListener: React.FC<OutsideClickListenerProps> = ({
 		return () => {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
-	}, []);
+	}, [handleClickOutside]);
 
 	return <div ref={containerRef}>{children}</div>;
 };

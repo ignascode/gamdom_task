@@ -1,19 +1,18 @@
 import React from 'react';
 import { makeAutoObservable } from 'mobx';
 import { MovieDetails, Movie } from 'types';
-import { ApiResponse, OMDBApiGetByID, OMDBApiSearch } from 'types/OMDBApi';
+import { ApiResponse, OMDBApi } from 'types/OMDBApi';
 import { OMDbApiRequestMovieTypes } from 'types';
 import { makePersistable } from 'mobx-persist-store';
 import { URL } from 'consts';
 import { toast } from 'react-toastify';
 
 class Store {
-	public searchTitle: string = '';
+	public searchTitle = '';
 	public searchType?: OMDbApiRequestMovieTypes;
 	public movies: Movie[] | MovieDetails[] = [];
-	public moviesLoading: boolean = false;
+	public moviesLoading = false;
 	public movieDetails?: MovieDetails;
-	public movieDetailsLoading: boolean = false;
 	public favoriteMovies: string[] = [];
 
 	constructor() {
@@ -31,42 +30,41 @@ class Store {
 			const request = await fetch(URL + '&' + query);
 			const result = await request.json();
 			if (result.Response === ApiResponse.False) {
-				toast(result.Error);
+				throw new Error(result.Error);
+			}
+			if (!result) {
+				throw new Error('No results');
 			}
 			return result;
 		} catch (error) {
-			toast(String(error));
+			if (error instanceof Error) {
+				toast(String(error.message));
+			} else {
+				toast(String(error));
+			}
+			throw error;
 		}
-		throw new Error('Unexpected code execution');
 	}
 
 	public async getMoviesByTextSearch(
 		search: string,
 		type?: OMDbApiRequestMovieTypes
-	): Promise<void> {
+	): Promise<OMDBApi['OMDBApiSearch']['res']> {
 		const query: URLSearchParams = new URLSearchParams({
 			s: search,
 			...(type && { type: type }),
 		});
 
-		const result = await this.requestHandler<OMDBApiSearch['res']>(
-			query
-		);
-		this.movies = result && result.Search ? result.Search : [];
-		this.moviesLoading = false;
+		return this.requestHandler<OMDBApi['OMDBApiSearch']['res']>(query);
 	}
 
-	public async getMovieByImdbId(imdbId: string): Promise<MovieDetails> {
+	public async getMovieDetailsByImdbId(
+		imdbId: string
+	): Promise<MovieDetails> {
 		const query = new URLSearchParams({
 			i: imdbId,
 		});
-		this.movieDetailsLoading = true;
-		const result = await this.requestHandler<OMDBApiGetByID['res']>(
-			query
-		);
-		this.movieDetails = result ? result : undefined;
-		this.movieDetailsLoading = false;
-		return result;
+		return this.requestHandler<OMDBApi['OMDBApiGetByID']['res']>(query);
 	}
 
 	public addToFavorites(imdbId: string) {
@@ -81,10 +79,10 @@ class Store {
 
 	public async getFavoriteMovies(): Promise<void> {
 		const promiseArr = this.favoriteMovies.map((imdbId) =>
-			this.getMovieByImdbId(imdbId)
+			this.getMovieDetailsByImdbId(imdbId)
 		);
 		const result = await Promise.all(promiseArr);
-		this.movies = result ? result : [];
+		this.movies = result;
 	}
 
 	public removeAllFavorites(): void {

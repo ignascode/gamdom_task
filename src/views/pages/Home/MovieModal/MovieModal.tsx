@@ -3,22 +3,35 @@ import { MovieModalProps } from './MovieModal.types';
 import { observer } from 'mobx-react-lite';
 import useStore from 'store/store';
 import * as S from './MovieModal.styled';
-import CardLoading from 'views/commonComp/CardLoading/CardLoading';
 import not_found_img from 'assets/image_not_available.png';
 import { NA } from 'consts';
 import capitalizeFirstLetter from 'util/capitalizeFirstLetter';
+import { runInAction } from 'mobx';
 
 const MovieModal: React.FC<MovieModalProps> = observer((p) => {
 	const GS = useStore();
 
+	const [isLoading, setIsLoading] = React.useState(false);
+
 	React.useEffect(() => {
 		const fetch = async () => {
 			if (!p.imdbId) return;
-			await GS.getMovieByImdbId(p.imdbId);
+
+			setIsLoading(true);
+			try {
+				const res = await GS.getMovieDetailsByImdbId(p.imdbId);
+				runInAction(() => {
+					GS.movieDetails = res;
+				});
+			} catch (e) {
+				console.error('Error while getting movie details', e);
+			} finally {
+				setIsLoading(false);
+			}
 		};
 
 		fetch();
-	}, [p.imdbId]);
+	}, [p.imdbId, GS]);
 
 	if (!GS.movieDetails) return <></>;
 
@@ -54,8 +67,8 @@ const MovieModal: React.FC<MovieModalProps> = observer((p) => {
 		<S.Modal
 			isOpen={p.isOpen}
 			onClose={p.onClose}
-			loading={GS.movieDetailsLoading}
-			loadingComponent={<CardLoading className="movie-modal" />}
+			loading={isLoading}
+			loadingComponent={<S.CardLoading descriptionElements={4} />}
 		>
 			<S.TopSection>
 				<S.ImgWrapper>

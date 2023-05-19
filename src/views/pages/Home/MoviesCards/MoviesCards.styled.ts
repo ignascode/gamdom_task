@@ -1,5 +1,6 @@
 import { MEDIA_QUERY } from 'consts';
 import styled from 'styled-components';
+import { default as CardLoadingComponent } from 'views/commonComp/CardLoading/CardLoading';
 
 export const MoviesCards = styled('div')`
 	display: grid;
@@ -17,6 +18,13 @@ export const MoviesCards = styled('div')`
 	@media (max-width: ${MEDIA_QUERY.sm}px) {
 		grid-template-columns: repeat(1, 1fr);
 	}
+`;
+
+export const CardLoading = styled(CardLoadingComponent)`
+	height: 427px;
+	flex-basis: calc(20% - 16px);
+	border-radius: 25px;
+	margin-bottom: 16px;
 `;
 
 export const ErrorContainer = styled('div')`
