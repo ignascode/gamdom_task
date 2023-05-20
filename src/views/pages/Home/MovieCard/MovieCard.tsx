@@ -18,7 +18,7 @@ const MovieCard: React.FC<MovieCardProps> = observer((p) => {
 	) => {
 		e.stopPropagation();
 		runInAction(() => {
-			GS.favoriteMovies.includes(imdbId)
+			GS.favoriteMoviesImdbIds.includes(imdbId)
 				? GS.removeFromFavorites(imdbId)
 				: GS.addToFavorites(imdbId);
 		});
@@ -36,7 +36,9 @@ const MovieCard: React.FC<MovieCardProps> = observer((p) => {
 					<S.Type>{p.Type}</S.Type>
 					<S.FavoriteStar
 						icon={
-							GS.favoriteMovies.includes(p.imdbID)
+							GS.favoriteMoviesImdbIds.includes(
+								p.imdbID
+							)
 								? solidStar
 								: regularStar
 						}

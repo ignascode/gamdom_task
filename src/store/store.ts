@@ -10,15 +10,18 @@ import { toast } from 'react-toastify';
 class Store {
 	public searchTitle = '';
 	public searchType?: OMDbApiRequestMovieTypes;
-	public movies: Movie[] | MovieDetails[] = [];
+	public movies: Movie[] = [];
 	public moviesLoading = false;
 	public movieDetails?: MovieDetails;
-	public favoriteMovies: string[] = [];
+	public favoriteMoviesImdbIds: string[] = [];
+	public showFavoriteMovies = false;
+	//Separate array is createed to display favorite movies and not to store all movie information to localStorage
+	public favoriteMovies: MovieDetails[] = [];
 
 	constructor() {
 		makePersistable(this, {
-			name: 'favoriteMovies',
-			properties: ['favoriteMovies'],
+			name: 'favoriteMoviesImdbIds',
+			properties: ['favoriteMoviesImdbIds'],
 			storage: window.localStorage,
 		});
 
@@ -26,6 +29,7 @@ class Store {
 	}
 
 	private async requestHandler<T>(query: URLSearchParams): Promise<T> {
+		//If this would be a real application I would also implement data type validation with something like Joi schema.
 		try {
 			const request = await fetch(URL + '&' + query);
 			const result = await request.json();
@@ -68,24 +72,29 @@ class Store {
 	}
 
 	public addToFavorites(imdbId: string) {
-		this.favoriteMovies.push(imdbId);
+		this.favoriteMoviesImdbIds.push(imdbId);
 	}
 
 	public removeFromFavorites(imdbId: string) {
-		this.favoriteMovies = this.favoriteMovies.filter(
+		this.favoriteMoviesImdbIds = this.favoriteMoviesImdbIds.filter(
 			(id) => id !== imdbId
+		);
+		this.favoriteMovies = this.favoriteMovies.filter(
+			(detailedMovie) => detailedMovie.imdbID !== imdbId
 		);
 	}
 
 	public async getFavoriteMovies(): Promise<void> {
-		const promiseArr = this.favoriteMovies.map((imdbId) =>
+		const promiseArr = this.favoriteMoviesImdbIds.map((imdbId) =>
 			this.getMovieDetailsByImdbId(imdbId)
 		);
 		const result = await Promise.all(promiseArr);
-		this.movies = result;
+		this.favoriteMovies = result;
+		this.showFavoriteMovies = true;
 	}
 
 	public removeAllFavorites(): void {
+		this.favoriteMoviesImdbIds = [];
 		this.favoriteMovies = [];
 	}
 

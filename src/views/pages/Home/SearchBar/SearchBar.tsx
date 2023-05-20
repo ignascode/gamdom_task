@@ -1,5 +1,4 @@
 import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
-
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -7,7 +6,6 @@ import useStore from 'store/store';
 import { OMDbApiRequestMovieTypes } from 'types';
 import debounce from 'util/debounce';
 import * as S from './SearchBar.styled';
-
 import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 
 const debouncedSearch = debounce((fn: () => void) => {
@@ -17,9 +15,13 @@ const debouncedSearch = debounce((fn: () => void) => {
 const SearchBar: React.FC = observer(() => {
 	const GS = useStore();
 
+	//I would place pagination number to global store if additional component needs to be create in separate component.
+	//If pagination component would be in this component, pagination number can be placed here with useState hook.
+
 	React.useEffect(() => {
 		if (!GS.searchTitle) return;
 		runInAction(() => {
+			GS.showFavoriteMovies = false;
 			GS.moviesLoading = true;
 		});
 		debouncedSearch(async () => {
@@ -27,6 +29,7 @@ const SearchBar: React.FC = observer(() => {
 				GS.moviesLoading = true;
 			});
 			try {
+				// if I would implement pagination, I would pass down the page number into API call here.
 				const res = await GS.getMoviesByTextSearch(
 					GS.searchTitle,
 					GS.searchType
@@ -47,6 +50,7 @@ const SearchBar: React.FC = observer(() => {
 		});
 	}, [GS.searchTitle, GS.searchType, GS]);
 
+	// if i would add filters or sorting, I would add them here, by adding a dropdown.
 	return (
 		<S.Container>
 			<S.Input
@@ -70,7 +74,7 @@ const SearchBar: React.FC = observer(() => {
 				}
 				selected={GS.searchType}
 			/>
-			{GS.favoriteMovies.length > 0 && (
+			{GS.favoriteMoviesImdbIds.length > 0 && (
 				<>
 					<S.Button
 						onClick={() => {

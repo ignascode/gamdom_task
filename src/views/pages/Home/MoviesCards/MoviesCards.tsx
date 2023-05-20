@@ -16,12 +16,17 @@ const MoviesCards: React.FC = observer(() => {
 		setModalOpen(true);
 	};
 
+	const moviesToDisplay = React.useMemo(
+		() => (GS.showFavoriteMovies ? 'favoriteMovies' : 'movies'),
+		[GS.showFavoriteMovies]
+	);
+
 	return (
 		<>
 			<S.MoviesCards>
 				{GS.moviesLoading
 					? [...Array(10)].map(() => <S.CardLoading />)
-					: GS.movies.map((movie, index) => (
+					: GS[moviesToDisplay].map((movie, index) => (
 							<MovieCard
 								key={index}
 								{...movie}
