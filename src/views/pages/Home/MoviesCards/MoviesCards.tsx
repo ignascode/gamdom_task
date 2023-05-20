@@ -21,6 +21,9 @@ const MoviesCards: React.FC = observer(() => {
 		[GS.showFavoriteMovies]
 	);
 
+	if (GS.movies.length === 0)
+		return <S.TextContainer>Try to search for movie</S.TextContainer>;
+
 	return (
 		<>
 			<S.MoviesCards>

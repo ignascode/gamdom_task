@@ -27,8 +27,7 @@ export const CardLoading = styled(CardLoadingComponent)`
 	margin-bottom: 16px;
 `;
 
-export const ErrorContainer = styled('div')`
-	display: flex;
+export const TextContainer = styled('div')`
 	font-size: 16px;
-	justify-content: center;
+	text-align: center;
 `;

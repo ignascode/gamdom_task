@@ -85,12 +85,14 @@ class Store {
 	}
 
 	public async getFavoriteMovies(): Promise<void> {
+		this.moviesLoading = true;
 		const promiseArr = this.favoriteMoviesImdbIds.map((imdbId) =>
 			this.getMovieDetailsByImdbId(imdbId)
 		);
 		const result = await Promise.all(promiseArr);
 		this.favoriteMovies = result;
 		this.showFavoriteMovies = true;
+		this.moviesLoading = false;
 	}
 
 	public removeAllFavorites(): void {
